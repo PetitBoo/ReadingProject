@@ -43,7 +43,7 @@ int File::userFile() {
 
     if (!users_file.is_open())
     {
-        std::cout << "\tНе удалось открыть файл Users.txt" << std::endl;
+        std::cout << "\tCannot open Users.txt" << std::endl;
         return -1;
     }
     else
@@ -55,15 +55,15 @@ int File::userFile() {
             std::string login;
             std::string pass;
 
-            std::cout << "Введите имя или напишите 0 для выхода:";
+            std::cout << "Enter name or 0 for exit:";
             std::cin >> name;
             if (name == "0") {
                 a = 0;
                 break;
             }
-            std::cout << "Введите логин:";
+            std::cout << "Enter login:";
             std::cin >> login;
-            std::cout << "Введите пароль:";
+            std::cout << "Enter password:";
             std::cin >> pass;
             _users.emplace_back(name, login, pass);
         }
@@ -76,7 +76,7 @@ int File::userFile() {
         {
             users_file << user << std::endl;
         }
-        std::cout << "\tДанные всех пользователей из текстового файла User.txt:" << std::endl;
+        std::cout << "\tAll users from User.txt:" << std::endl;
 
         users_file.seekg(0, std::ios::beg);
 
@@ -93,17 +93,17 @@ int File::userFile() {
             std::cout << "\tИмя: " << userName << "\tЛогин: " << userLogin << "\tПароль: " << userPass << std::endl;
         }
         std::cout << std::endl;
-        std::cout << "\tСоздан файл с разрешениями: ";
+        std::cout << "\tCurrently permission for Users.txt created: ";
         demo_perms(fs::status("Users.txt").permissions());
         fs::permissions("Users.txt",
             fs::perms::group_all | fs::perms::others_read,
             fs::perm_options::remove);
         
         int opt = 0;
-        std::cout << "Хотите задать собственные права? Введите 1 - для всех прав членов группы, 2 -только для записи и чтения, 3 - только для чтения, 0 - для выхода:";
+        std::cout << "Do you want to stand new rights? Enter 1 - for rwx for group, 2 - for rw- for group, 3 - for r-- for group, 0 - for exit: ";
         std::cin >> opt;
        
-        std::cout << "\tПроверка текущего статуса разрешений: ";
+        std::cout << "\tCurrently permission: ";
         demo_perms(fs::status("Users.txt").permissions());
     }
     return 0;
@@ -132,7 +132,7 @@ int File::messageFile() {
             messages_file << message << std::endl;
         }
         std::cout << std::endl;
-        std::cout << "\tДанные всех сообщений из текстового файла Messages.txt:" << std::endl;
+        std::cout << "\tAll data from Messages.txt:" << std::endl;
         std::cout << std::endl;
         messages_file.seekg(0, std::ios::beg);
         std::string messageText, messageSender, messageReceiver;
@@ -144,16 +144,16 @@ int File::messageFile() {
             getline(input, messageText, ';');
             getline(input, messageSender, ';');
             getline(input, messageReceiver);
-            std::cout << "\t(oт) " << messageSender << "\t(для) " << messageReceiver << "\t(сообщение) " << messageText << std::endl;
+            std::cout << "\t(from) " << messageSender << "\t(for) " << messageReceiver << "\t(message) " << messageText << std::endl;
         }
         std::cout << std::endl;
-        std::cout << "\tСоздан файл с разрешениями: ";
+        std::cout << "\tCurrently permission for Users.txt created: ";
         demo_perms(fs::status("Messages.txt").permissions());
         fs::permissions("Messages.txt",
             fs::perms::group_all | fs::perms::others_all,
             fs::perm_options::remove);
 
-        std::cout << "\tПроверка текущего статуса разрешений: ";
+        std::cout << "\tПCurrently permission: ";
         demo_perms(fs::status("Messages.txt").permissions());
     }
     return 0;
