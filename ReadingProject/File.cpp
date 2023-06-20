@@ -90,13 +90,13 @@ int File::userFile() {
             getline(input, userName, ';');
             getline(input, userLogin, ';');
             getline(input, userPass);
-            std::cout << "\tˆ¬ï: " << userName << "\t‹®£¨­: " << userLogin << "\t à®«ì: " << userPass << std::endl;
+            std::cout << "\tName: " << userName << "\tLogin: " << userLogin << "\tPassword: " << userPass << std::endl;
         }
         std::cout << std::endl;
         std::cout << "\tCurrently permission for Users.txt created: ";
         demo_perms(fs::status("Users.txt").permissions());
         fs::permissions("Users.txt",
-            fs::perms::group_all | fs::perms::others_read,
+            fs::perms::group_write | fs::perms::group_read,
             fs::perm_options::remove);
         
         int opt = 0;
@@ -150,7 +150,7 @@ int File::messageFile() {
         std::cout << "\tCurrently permission for Users.txt created: ";
         demo_perms(fs::status("Messages.txt").permissions());
         fs::permissions("Messages.txt",
-            fs::perms::group_all | fs::perms::others_all,
+            fs::perms::group_write | fs::perms::group_read,
             fs::perm_options::remove);
 
         std::cout << "\tCurrently permission: ";
