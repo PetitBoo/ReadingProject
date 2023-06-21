@@ -1,5 +1,0 @@
-Hi!;Claire;Jill
-Hello! How are you?;Jill;Claire
-I'm fine!;Claire;Jill
-what do you think about rocks?;Chris;Jill
-NOTHING!;Jill;Chris
