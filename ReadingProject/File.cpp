@@ -39,12 +39,12 @@ File::~File() = default;
 
 int File::userFile() {
 
-    std::fstream users_file = std::fstream("Users.txt", std::ios::in | std::ios::out);
+    std::fstream users_file = std::fstream("Users.txt" /*, std::ios::in | std::ios::out*/);
 
-    if (!users_file)
+    /*if (!users_file)
     {
         users_file = std::fstream("Users.txt", std::ios::in | std::ios::out | std::ios::trunc);
-    }
+    }*/
 
     if (!users_file.is_open())
     {
@@ -101,12 +101,12 @@ int File::userFile() {
         std::cout << "\tCurrently permission for Users.txt created: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
         std::filesystem::permissions("Users.txt",
-            std::filesystem::perms::group_write | std::filesystem::perms::group_read,
-            std::filesystem::perm_options::remove);
+            std::filesystem::perms::owner_all | std::filesystem::perms::group_all,
+            std::filesystem::perm_options::add);
         
-        int opt = 0;
+        /*int opt = 0;
         std::cout << "Do you want to stand new rights? Enter 1 - for rwx for group, 2 - for rw- for group, 3 - for r-- for group, 0 - for exit: ";
-        std::cin >> opt;
+        std::cin >> opt;*/
        
         std::cout << "\tCurrently permission: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
@@ -122,7 +122,7 @@ int File::messageFile() {
     }
     if (!messages_file.is_open())
     {
-        std::cout << "\t¥ ã¤ «®áì ®âªàëâì ä ©« Messages.txt" << std::endl;
+        std::cout << "\tCannot open Messages.txt" << std::endl;
         return -1;
     }
     else
@@ -159,7 +159,7 @@ int File::messageFile() {
             std::filesystem::perm_options::remove);
 
         std::cout << "\tCurrently permission: ";
-        demo_perms(fs::status("Messages.txt").permissions());
+        demo_perms(std::filesystem::status("Messages.txt").permissions());
     }
     return 0;
 }
