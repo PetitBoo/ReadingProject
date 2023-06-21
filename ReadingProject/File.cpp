@@ -1,29 +1,34 @@
 #include "File.h"
 
-void demo_perms(fs::perms p)
+void demo_perms(std::filesystem::perms p)
 {
-    std::cout << ((p & fs::perms::owner_read) != fs::perms::none ? "r" : "-")
-        << ((p & fs::perms::owner_write) != fs::perms::none ? "w" : "-")
-        << ((p & fs::perms::owner_exec) != fs::perms::none ? "x" : "-")
-        << ((p & fs::perms::group_read) != fs::perms::none ? "r" : "-")
-        << ((p & fs::perms::group_write) != fs::perms::none ? "w" : "-")
-        << ((p & fs::perms::group_exec) != fs::perms::none ? "x" : "-")
-        << ((p & fs::perms::others_read) != fs::perms::none ? "r" : "-")
-        << ((p & fs::perms::others_write) != fs::perms::none ? "w" : "-")
-        << ((p & fs::perms::others_exec) != fs::perms::none ? "x" : "-")
-        << '\n';
+    using std::filesystem::perms;
+    auto show = [=](char op, perms perm)
+    {
+        std::cout << (perms::none == (perm & p) ? '-' : op);
+    };
+    show('r', perms::owner_read);
+    show('w', perms::owner_write);
+    show('x', perms::owner_exec);
+    show('r', perms::group_read);
+    show('w', perms::group_write);
+    show('x', perms::group_exec);
+    show('r', perms::others_read);
+    show('w', perms::others_write);
+    show('x', perms::others_exec);
+    std::cout << '\n';
 }
 
 void perms_group(int a)
 {
-    demo_perms(fs::status("Users.txt").permissions());
+    demo_perms(std::filesystem::status("Users.txt").permissions());
     switch (a) {
     case(1):
-        fs::permissions("Users.txt", fs::perms::group_all);
+        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_all);
     case(2):
-        fs::permissions("Users.txt", fs::perms::group_write | fs::perms::group_read);
+        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_write | std::filesystem::perms::group_read);
     case(3):
-        fs::permissions("Users.txt", fs::perms::group_read);
+        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_read);
     default:
         break;
     }
@@ -94,17 +99,17 @@ int File::userFile() {
         }
         std::cout << std::endl;
         std::cout << "\tCurrently permission for Users.txt created: ";
-        demo_perms(fs::status("Users.txt").permissions());
-        fs::permissions("Users.txt",
-            fs::perms::group_write | fs::perms::group_read,
-            fs::perm_options::remove);
+        demo_perms(std::filesystem::status("Users.txt").permissions());
+        std::filesystem::permissions("Users.txt",
+            std::filesystem::perms::group_write | std::filesystem::perms::group_read,
+            std::filesystem::perm_options::remove);
         
         int opt = 0;
         std::cout << "Do you want to stand new rights? Enter 1 - for rwx for group, 2 - for rw- for group, 3 - for r-- for group, 0 - for exit: ";
         std::cin >> opt;
        
         std::cout << "\tCurrently permission: ";
-        demo_perms(fs::status("Users.txt").permissions());
+        demo_perms(std::filesystem::status("Users.txt").permissions());
     }
     return 0;
 }
@@ -148,10 +153,10 @@ int File::messageFile() {
         }
         std::cout << std::endl;
         std::cout << "\tCurrently permission for Users.txt created: ";
-        demo_perms(fs::status("Messages.txt").permissions());
-        fs::permissions("Messages.txt",
-            fs::perms::group_write | fs::perms::group_read,
-            fs::perm_options::remove);
+        demo_perms(std::filesystem::status("Messages.txt").permissions());
+        std::filesystem::permissions("Messages.txt",
+            std::filesystem::perms::group_write | std::filesystem::perms::group_read,
+            std::filesystem::perm_options::remove);
 
         std::cout << "\tCurrently permission: ";
         demo_perms(fs::status("Messages.txt").permissions());
