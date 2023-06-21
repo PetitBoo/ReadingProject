@@ -41,10 +41,10 @@ int File::userFile() {
 
     std::fstream users_file = std::fstream("Users.txt" /*, std::ios::in | std::ios::out*/);
 
-    /*if (!users_file)
+    if (!users_file)
     {
         users_file = std::fstream("Users.txt", std::ios::in | std::ios::out | std::ios::trunc);
-    }*/
+    }
 
     if (!users_file.is_open())
     {
