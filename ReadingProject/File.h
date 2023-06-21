@@ -7,10 +7,7 @@
 #include"Message.h"
 #include <filesystem>
 
-namespace fs = std::filesystem;
-
-void demo_perms(fs::perms p);
-void perms_group(int a);
+void demo_perms(std::filesystem::perms p);
 
 class File {
     std::vector<User> _users;
