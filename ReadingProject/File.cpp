@@ -19,21 +19,6 @@ void demo_perms(std::filesystem::perms p)
     std::cout << '\n';
 }
 
-void perms_group(int a)
-{
-    demo_perms(std::filesystem::status("Users.txt").permissions());
-    switch (a) {
-    case(1):
-        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_all);
-    case(2):
-        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_write | std::filesystem::perms::group_read);
-    case(3):
-        std::filesystem::permissions("Users.txt", std::filesystem::perms::group_read);
-    default:
-        break;
-    }
-}
-
 File::File() {};
 File::~File() = default;
 
@@ -98,15 +83,11 @@ int File::userFile() {
             std::cout << "\tName: " << userName << "\tLogin: " << userLogin << "\tPassword: " << userPass << std::endl;
         }
         std::cout << std::endl;
-        std::cout << "\tCurrently permission for Users.txt created: ";
+        std::cout << "\tPermission for Users.txt are created: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
         std::filesystem::permissions("Users.txt",
             std::filesystem::perms::owner_all | std::filesystem::perms::group_all,
             std::filesystem::perm_options::add);
-        
-        /*int opt = 0;
-        std::cout << "Do you want to stand new rights? Enter 1 - for rwx for group, 2 - for rw- for group, 3 - for r-- for group, 0 - for exit: ";
-        std::cin >> opt;*/
        
         std::cout << "\tCurrently permission: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
@@ -152,13 +133,13 @@ int File::messageFile() {
             std::cout << "\t(from) " << messageSender << "\t(for) " << messageReceiver << "\t(message) " << messageText << std::endl;
         }
         std::cout << std::endl;
-        std::cout << "\tCurrently permission for Users.txt created: ";
+        std::cout << "\tPermissions for Users.txt are created: ";
         demo_perms(std::filesystem::status("Messages.txt").permissions());
         std::filesystem::permissions("Messages.txt",
-            std::filesystem::perms::group_write | std::filesystem::perms::group_read,
-            std::filesystem::perm_options::remove);
+            std::filesystem::perms::owner_all | std::filesystem::perms::group_write | std::filesystem::perms::group_read,
+            std::filesystem::perm_options::add);
 
-        std::cout << "\tCurrently permission: ";
+        std::cout << "\tCurrently permissions: ";
         demo_perms(std::filesystem::status("Messages.txt").permissions());
     }
     return 0;
