@@ -86,8 +86,8 @@ int File::userFile() {
         std::cout << "\tPermission for Users.txt are created: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
         std::filesystem::permissions("Users.txt",
-            std::filesystem::perms::owner_all | std::filesystem::perms::group_all,
-            std::filesystem::perm_options::add);
+            std::filesystem::perms::owner_all | std::filesystem::perms::group_exec | std::filesystem::perms::others_exec,
+            std::filesystem::perm_options::replace);
        
         std::cout << "\tCurrently permission: ";
         demo_perms(std::filesystem::status("Users.txt").permissions());
@@ -136,8 +136,8 @@ int File::messageFile() {
         std::cout << "\tPermissions for Users.txt are created: ";
         demo_perms(std::filesystem::status("Messages.txt").permissions());
         std::filesystem::permissions("Messages.txt",
-            std::filesystem::perms::owner_all | std::filesystem::perms::group_write | std::filesystem::perms::group_read,
-            std::filesystem::perm_options::add);
+            std::filesystem::perms::owner_all | std::filesystem::perms::group_exec | std::filesystem::perms::others_exec,
+            std::filesystem::perm_options::replace);
 
         std::cout << "\tCurrently permissions: ";
         demo_perms(std::filesystem::status("Messages.txt").permissions());
